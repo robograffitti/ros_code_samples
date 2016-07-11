@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   rosconsole
   roscpp
   sensor_msgs
+  nodelet
   #  perception_pcl
 )
 
@@ -102,11 +103,19 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
+include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS})
+
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES pcl_ros_samples
-#  CATKIN_DEPENDS libpcl-1.7-all pcl_conversions pcl_ros perception_pcl rosconsole roscpp sensor_msgs
-#  DEPENDS system_lib
+  #  INCLUDE_DIRS include
+  #  LIBRARIES pcl_ros_samples
+  #  CATKIN_DEPENDS libpcl-1.7-all pcl_conversions pcl_ros perception_pcl rosconsole roscpp sensor_msgs
+  #  DEPENDS system_lib
+
+  LIBRARIES pcl_ros_samples
+  DEPENDS pcl
+  CATKIN_DEPENDS pcl_ros sensor_msgs ## geometry_msgs
+  INCLUDE_DIRS include
 )
 
 ###########
@@ -116,9 +125,9 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+# include_directories(
+#   ${catkin_INCLUDE_DIRS}
+# )
 
 ## Declare a C++ library
 # add_library(pcl_ros_samples
@@ -189,3 +198,22 @@ target_link_libraries(garden_feature_detector ${catkin_LIBRARIES})
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+## Create the nodelet tutorial library
+add_library(plane_detector_nodelet src/plane_detector_nodelet.cpp)
+target_link_libraries(plane_detector_nodelet ${catkin_LIBRARIES})
+if(catkin_EXPORTED_LIBRARIES)
+  add_dependencies(plane_detector_nodelet ${catkin_EXPORTED_LIBRARIES})
+endif()
+
+## Mark the nodelet library for installations
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+install(TARGETS plane_detector_nodelet
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+install(FILES plane_detector_nodelet.xml plane_detector_nodelet.launch test_default.yaml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
