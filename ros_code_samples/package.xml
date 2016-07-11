@@ -1,0 +1,19 @@
+<package>
+  <name>ros_code_samples</name>
+  <version>1.0.0</version>
+  <description>
+    <p>Metapackage that contains ros and pcl code sample packages</p>
+  </description>
+  <maintainer email="y-tanaka@jsk.imi.i.u-tokyo.ac.jp">
+    Yoshimaru Tanaka
+  </maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>pcl_ros_samples</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+
+</package>

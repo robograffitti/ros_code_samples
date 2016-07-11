@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="pcl_ros_outdoor" type="garden_feature_detector" name="garden_feature_detector">
+        <remap from="/cloud_in" to="/camera/depth/points"/>
+    </node>
+</launch>
