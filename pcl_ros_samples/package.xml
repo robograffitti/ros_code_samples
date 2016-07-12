@@ -59,6 +59,9 @@
   <build_depend>nodelet</build_depend>
   <run_depend>nodelet</run_depend>
 
+  <build_depend>pluginlib</build_depend>
+  <run_depend>pluginlib</run_depend>
+
   <export>
     <nodelet plugin="${prefix}/pcl_ros_samples_nodelet.xml" />
   </export>

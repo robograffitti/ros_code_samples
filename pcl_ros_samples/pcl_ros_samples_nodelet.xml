@@ -1,7 +1,15 @@
-<library path="lib/lib_pcl_ros_samples">
+<!--
+    temporary resolution
+    not sure about how to change the librarh path
+    and how .so is named.
+-->
+<!-- <library path="lib/libpcl_ros_samples"> -->
+<library path="lib/libplane_detector_nodelet">
+
   <class name="pcl_ros_samples/PlaneDetector" type="pcl_ros_samples::PlaneDetector" base_class_type="nodelet::Nodelet">
     <description>
       This is my nodelet.
     </description>
   </class>
+
 </library>

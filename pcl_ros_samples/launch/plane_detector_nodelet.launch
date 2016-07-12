@@ -1,7 +1,10 @@
 <launch>
   <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager" output="screen"/>
 
-  <node pkg="nodelet" type="nodelet" name="plane_detector_nodelet" args="load pcl_ros_samples/PlaneDetector standalone_nodelet" output="screen">
+  <node pkg="nodelet" type="nodelet"
+        name="plane_detector_nodelet"
+        args="load pcl_ros_samples/PlaneDetector standalone_nodelet"
+        output="screen">
     <remap from="input" to="p_input"/>
   </node>
 

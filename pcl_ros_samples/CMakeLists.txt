@@ -6,6 +6,7 @@ project(pcl_ros_samples)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   nodelet
+  pluginlib
   rosconsole
   roscpp
   sensor_msgs
@@ -110,10 +111,10 @@ include_directories(include
   )
 
 catkin_package(
+  INCLUDE_DIRS include ## include/pcl_ros_samples/
   LIBRARIES pcl_ros_samples
   DEPENDS pcl
-  CATKIN_DEPENDS nodelet roscpp pcl_ros sensor_msgs ## geometry_msgs
-  INCLUDE_DIRS include ## include/pcl_ros_samples/
+  CATKIN_DEPENDS nodelet pluginlib roscpp pcl_ros sensor_msgs ## geometry_msgs
   #  INCLUDE_DIRS include
   #  LIBRARIES pcl_ros_samples
   #  CATKIN_DEPENDS libpcl-1.7-all pcl_conversions pcl_ros perception_pcl rosconsole roscpp sensor_msgs
