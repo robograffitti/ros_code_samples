@@ -5,29 +5,41 @@ PLUGINLIB_EXPORT_CLASS(pcl_ros_samples::PlaneDetector, nodelet::Nodelet)
 
 namespace pcl_ros_samples
 {
+  PlaneDetector::PlaneDetector()
+  {
+    // constructor process
+  }
+  PlaneDetector::~PlaneDetector()
+  {
+    // destructor process
+  }
+
   void PlaneDetector::onInit()
   {
     NODELET_DEBUG("Initializing plane_detector_nodelet...");
 
-    // nodelet::Nodelet::onInit();
+    ros::NodeHandle& pnh = getPrivateNodeHandle();
+    // pnh.getParam("value", value_);
+    pub = pnh.advertise<sensor_msgs::PointCloud2>("plane", 1);
+    sub = pnh.subscribe("input", 1, &PlaneDetector::applyFilter, this);
 
+    /* from connection_base_nodelt in jsk_topic_tools
     bool use_multithread;
     ros::param::param<bool>("~use_multithread_callback", use_multithread, true);
-
     if (use_multithread) {
       NODELET_DEBUG("use multithread callback");
       nh_.reset (new ros::NodeHandle (getMTNodeHandle ()));
     } else {
       NODELET_DEBUG("use singlethread callback");
       nh_.reset (new ros::NodeHandle (getNodeHandle ()));
-    }
+      } */
     // output_pub_ = advertise<sensor_msgs::PointCloud2>(*nh_, "plane", 1);
-    output_pub_ = nh_.advertise<sensor_msgs::PointCloud2>("plane", 1);
   }
 
   void PlaneDetector::applyFilter(const sensor_msgs::PointCloud2ConstPtr &input)
   {
-    boost::mutex::scoped_lock lock(mutex_);
+    // boost::mutex::scoped_lock lock(mutex_);
+
     std_msgs::Header header = input->header;
     pcl::PCLPointCloud2 *cloud = new pcl::PCLPointCloud2; // initialize object
     pcl_conversions::toPCL(*input, *cloud); // from input, generate content of cloud
@@ -95,21 +107,18 @@ namespace pcl_ros_samples
     // cloud_plane_ros.header.frame_id = "/base_link"; // odom -> /base_link
     cloud_plane_ros.header.frame_id = header.frame_id;
     cloud_plane_ros.header.stamp = header.stamp; // ros::Time::now() -> header.stamp
-    output_pub_.publish(cloud_plane_ros);
+    pub.publish(cloud_plane_ros);
   }
 
-  void PlaneDetector::subscribe()
-  {
-    // Subscription
-    input_sub_ = nh_->subscribe("input", 1, &PlaneDetector::applyFilter, this);
-  }
+  // void PlaneDetector::subscribe()
+  // {
+  //   // Subscription
+  //   input_sub_ = nh_->subscribe("input", 1, &PlaneDetector::applyFilter, this);
+  // }
 
-  void PlaneDetector::unsubscribe()
-  {
-    // Stop Subscription
-    input_sub_.shutdown();
-  }
-
-  
-
+  // void PlaneDetector::unsubscribe()
+  // {
+  //   // Stop Subscription
+  //   input_sub_.shutdown();
+  // }
 }

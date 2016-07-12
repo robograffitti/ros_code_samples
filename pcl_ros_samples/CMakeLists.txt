@@ -220,7 +220,7 @@ install(TARGETS plane_detector_nodelet
   )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(FILES plane_detector_nodelet.xml
+install(FILES pcl_ros_samples_nodelet.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
   )
 install(DIRECTORY launch # launch/plane_detector_nodelet.launch

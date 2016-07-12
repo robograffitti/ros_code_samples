@@ -24,24 +24,31 @@
 
 namespace pcl_ros_samples
 {
-
   class PlaneDetector : public nodelet::Nodelet
   {
   public:
-    int sample_int;
+    PlaneDetector();
+    ~PlaneDetector();
 
   protected:
-    boost::mutex mutex_;
-    boost::shared_ptr<ros::NodeHandle> nh_;
+    // no member values or functions
+
+  private:
+    // boost::mutex mutex_;
+    // boost::shared_ptr<ros::NodeHandle> nh_;
+
+    // 2 methods and 2 values
     virtual void onInit(); // virtual enable a function to be overwritten
-    virtual void applyFilter(const sensor_msgs::PointCloud2ConstPtr &input);
-    ros::Subscriber input_sub_;
-    ros::Publisher output_pub_;
+    void applyFilter(const sensor_msgs::PointCloud2ConstPtr &input);
+    ros::Subscriber sub;
+    ros::Publisher pub;
 
-    virtual void subscribe();
-    virtual void unsubscribe();
-
-    template<class T> ros::Publisher
+    /* connection_based_nodelet */
+    // ros::Subscriber input_sub_;
+    // ros::Publisher output_pub_;
+    // virtual void subscribe();
+    // virtual void unsubscribe();
+    // template<class T> ros::Publisher
     // advertise(ros::NodeHandle& nh,
     //             std::string topic, int queue_size)
     // {
@@ -60,6 +67,5 @@ namespace pcl_ros_samples
     // publishers_.push_back(ret);
     // return ret;
     // }
-
   };
 }
