@@ -1,4 +1,3 @@
-#include <pluginlib/class_list_macros.h>
 #include "pcl_ros_samples/plane_detector_nodelet.h"
 
 PLUGINLIB_EXPORT_CLASS(pcl_ros_samples::PlaneDetector, nodelet::Nodelet)
@@ -121,4 +120,5 @@ namespace pcl_ros_samples
   //   // Stop Subscription
   //   input_sub_.shutdown();
   // }
+  PLUGINLIB_DECLARE_CLASS(pcl_ros_samples, PlaneDetector, pcl_ros_samples::PlaneDetector, nodelet::Nodelet);
 }

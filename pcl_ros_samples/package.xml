@@ -60,7 +60,7 @@
   <run_depend>nodelet</run_depend>
 
   <export>
-    <nodelet plugin="${prefix}/nodelet_plugins.xml" />
+    <nodelet plugin="${prefix}/pcl_ros_samples_nodelet.xml" />
   </export>
 
 </package>
