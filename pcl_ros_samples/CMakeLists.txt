@@ -5,12 +5,12 @@ project(pcl_ros_samples)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  pcl_conversions
-  pcl_ros
+  nodelet
   rosconsole
   roscpp
   sensor_msgs
-  nodelet
+  pcl_conversions
+  pcl_ros
   #  perception_pcl
 )
 
@@ -104,19 +104,22 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS})
+include_directories(include
+  ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+  # ${OpenCV_INCLUDE_DIRS}
+  )
 
 catkin_package(
+  LIBRARIES pcl_ros_samples
+  DEPENDS pcl
+  CATKIN_DEPENDS nodelet roscpp pcl_ros sensor_msgs ## geometry_msgs
+  INCLUDE_DIRS include ## include/pcl_ros_samples/
   #  INCLUDE_DIRS include
   #  LIBRARIES pcl_ros_samples
   #  CATKIN_DEPENDS libpcl-1.7-all pcl_conversions pcl_ros perception_pcl rosconsole roscpp sensor_msgs
   #  DEPENDS system_lib
-
-  LIBRARIES pcl_ros_samples
-  DEPENDS pcl
-  CATKIN_DEPENDS pcl_ros sensor_msgs ## geometry_msgs
-  INCLUDE_DIRS include
-)
+  )
 
 ###########
 ## Build ##
@@ -208,12 +211,21 @@ endif()
 
 ## Mark the nodelet library for installations
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  )
 install(TARGETS plane_detector_nodelet
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+  )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(FILES plane_detector_nodelet.xml plane_detector_nodelet.launch test_default.yaml
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(FILES plane_detector_nodelet.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  )
+install(DIRECTORY launch # launch/plane_detector_nodelet.launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  )
+install(DIRECTORY config # config/plane_detector_default.yaml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  )
