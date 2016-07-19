@@ -1,0 +1,44 @@
+<launch>
+  <arg name="gzname" default="gazebo"/>
+  <arg name="ENABLE_PIN_MODE" default="false" />
+  <arg name="WORLD" default="$(find hrpsys_gazebo_general)/worlds/empty_add_cfm.world"
+       unless="$(arg ENABLE_PIN_MODE)"/>
+  <arg name="WORLD" default="$(find hrpsys_gazebo_general)/worlds/empty_add_cfm_pin.world"
+       if="$(arg ENABLE_PIN_MODE)"/>
+  <arg name="PAUSED" default="false"/>
+  <arg name="SYNCHRONIZED" default="false" />
+  <arg name="SPAWN_MODEL" default="true" />
+
+  <!-- initial robot pose -->
+  <arg name="MODEL_TRANSLATE_X" default="0.0" />
+  <arg name="MODEL_TRANSLATE_Y" default="0.0" />
+  <arg name="MODEL_TRANSLATE_Z" default="1.025" />
+  <arg name="MODEL_ROTATE_R" default="0.0" />
+  <arg name="MODEL_ROTATE_P" default="0.0" />
+  <arg name="MODEL_ROTATE_Y" default="0.0" />
+
+  <!-- initial multisense hokuyo spindle speed -->
+  <arg name="ENABLE_MULTISENSE" default="true" />
+  <arg name="SPINDLE" default="false" />
+  <arg name="SPINDLE_SPEED" default="0.00" />
+
+  <include file="$(find hrpsys_gazebo_general)/launch/gazebo_robot_no_controllers.launch">
+    <arg name="ROBOT_TYPE" value="JAXON" />
+    <arg name="WORLD" value="$(arg WORLD)" />
+    <arg name="HRPSYS_GAZEBO_CONFIG" default="$(find hrpsys_gazebo_tutorials)/config/JAXON.yaml" />
+    <arg name="ROBOT_MODEL" default="$(find hrpsys_gazebo_samples)/robot_models/JAXON/JAXON.urdf.xacro" />
+
+    <arg name="PAUSED" value="$(arg PAUSED)"/>
+    <arg name="SYNCHRONIZED" value="$(arg SYNCHRONIZED)" />
+    <arg name="USE_INSTANCE_NAME" value="true" />
+    <arg name="gzname" value="$(arg gzname)" />
+    <arg name="SPAWN_MODEL" value="$(arg SPAWN_MODEL)" />
+
+    <arg name="MODEL_TRANSLATE_X" value="$(arg MODEL_TRANSLATE_X)" />
+    <arg name="MODEL_TRANSLATE_Y" value="$(arg MODEL_TRANSLATE_Y)" />
+    <arg name="MODEL_TRANSLATE_Z" value="$(arg MODEL_TRANSLATE_Z)" />
+    <arg name="MODEL_ROTATE_R" value="$(arg MODEL_ROTATE_R)" />
+    <arg name="MODEL_ROTATE_P" value="$(arg MODEL_ROTATE_P)" />
+    <arg name="MODEL_ROTATE_Y" value="$(arg MODEL_ROTATE_Y)" />
+  </include>
+</launch>

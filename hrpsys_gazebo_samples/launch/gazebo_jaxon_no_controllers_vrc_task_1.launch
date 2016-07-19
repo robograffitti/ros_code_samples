@@ -1,0 +1,14 @@
+<launch>
+  <arg name="MODEL_TRANSLATE_X" default="5.0" />
+  <arg name="MODEL_TRANSLATE_Y" default="-2.0" />
+  <arg name="MODEL_TRANSLATE_Z" default="1.0275" />
+  <arg name="ENABLE_MULTISENSE" default="true" />
+
+  <include file="$(find hrpsys_gazebo_tutorials)/launch/gazebo_jaxon_no_controllers.launch">
+    <arg name="WORLD" value="$(find hrpsys_gazebo_samples)/worlds/vrc_task_1_without_atlas_and_polaris.world" />
+    <arg name="MODEL_TRANSLATE_X" value="$(arg MODEL_TRANSLATE_X)" />
+    <arg name="MODEL_TRANSLATE_Y" value="$(arg MODEL_TRANSLATE_Y)" />
+    <arg name="MODEL_TRANSLATE_Z" value="$(arg MODEL_TRANSLATE_Z)" />
+    <arg name="ENABLE_MULTISENSE" value="$(arg ENABLE_MULTISENSE)" />
+  </include>
+</launch>
