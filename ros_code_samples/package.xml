@@ -11,6 +11,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>pcl_ros_samples</run_depend>
+  <run_depend>hrpsys_gazebo_samples</run_depend>
+  <run_depend>pr2_gazebo_samples</run_depend>
+  <run_depend>hrpsys_choreonoid_samples</run_depend>
 
   <export>
     <metapackage/>
